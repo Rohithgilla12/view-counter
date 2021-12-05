@@ -51,7 +51,8 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
         ${getCommonCSS()}
     </style>
     <body>
-      <p> ${id} </p>
+      <p>View count is ${id} </p>
+      
     </body>
 </html>`;
   res.send(html);
