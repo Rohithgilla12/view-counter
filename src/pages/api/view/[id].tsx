@@ -3,11 +3,6 @@ import { NextApiRequest, NextApiResponse } from "next";
 const getCommonCSS = () => {
   return `
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
-    himport { NextApiRequest } from 'next';
-tml{
-        height: 128px;
-        width: 128px;
-    }
     body {
         background: white;
         color: black;
