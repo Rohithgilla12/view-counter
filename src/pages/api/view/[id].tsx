@@ -44,9 +44,8 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
   const { id } = req.query;
   const html = `<!DOCTYPE html>
 <html>
-    <meta charset="utf-8">
-    <title>Generated Image</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
     <style>
         ${getCommonCSS()}
     </style>
@@ -55,5 +54,8 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
       
     </body>
 </html>`;
-  res.send(html);
+  // send html string as response
+  res.statusCode = 200;
+  res.setHeader("Content-Type", "text/html");
+  res.end(html);
 }
