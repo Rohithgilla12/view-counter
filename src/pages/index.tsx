@@ -14,6 +14,8 @@ import Layout from "../components/Layout";
 import { supabase } from "../utils/supabase";
 
 const IndexPage = () => {
+  // TODO: getServerSideProps to get list of assets of the logged in user
+
   const { user } = Auth.useUser();
 
   if (user) {
