@@ -13,18 +13,38 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { Auth, Button } from "@supabase/ui";
-import React, { useState } from "react";
+import { GetServerSideProps } from "next";
+import React, { useEffect, useState } from "react";
 import Layout from "../components/Layout";
+import { MyAssets } from "../components/MyAssets";
 import { supabase } from "../utils/supabase";
 
-const IndexPage = () => {
+interface Asset {
+  id: number;
+  created_at: Date;
+  views: number;
+  slug: string | null;
+  url: string;
+  owner: string;
+}
+
+interface MyAssetsProps {
+  error: any;
+  assets: Asset[];
+}
+
+const IndexPage: React.FC<MyAssetsProps> = ({ error, assets }) => {
   // TODO: getServerSideProps to get list of assets of the logged in user
 
   const { user } = Auth.useUser();
 
   const [embedUrl, setEmbedUrl] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false);
+  const [redirectUrl, setRedirectUrl] = useState("");
   const [createdData, setCreatedData] = useState<any>(null);
+
+  useEffect(() => {
+    setRedirectUrl(window.location.href);
+  }, []);
 
   if (user) {
     return (
@@ -38,12 +58,12 @@ const IndexPage = () => {
               onSubmit={async (e) => {
                 e.preventDefault();
                 e.stopPropagation();
-                // const slug = (e.target as any).slug.value;
-                const url = (e.target as any).url.value;
+                const slug = (e.target as any).slug.value as string;
+                const url = (e.target as any).url.value as string;
 
                 const { data, error } = await supabase.from("asset").insert([
                   {
-                    // slug: slug,
+                    slug: slug.length === 0 ? null : slug,
                     url: url,
                     owner: user.id,
                   },
@@ -62,14 +82,14 @@ const IndexPage = () => {
                 <FormLabel>URL</FormLabel>
                 <Input name="url" type="url" required={true} />
               </FormControl>
-              {/* <FormControl id="slug">
+              <FormControl id="slug">
                 <FormLabel>Slug</FormLabel>
                 <Input name="slug" type="text" />
                 <FormHelperText>
                   This is optional too, if you don't provide a slug, we generate
                   an id for you
                 </FormHelperText>
-              </FormControl> */}
+              </FormControl>
               <Box h={4} />
               <Button type="primary" block htmlType="submit">
                 Create
@@ -103,6 +123,7 @@ const IndexPage = () => {
             )}
           </Box>
         </SimpleGrid>
+        <MyAssets assets={assets} error={error} />
       </Layout>
     );
   }
@@ -114,10 +135,46 @@ const IndexPage = () => {
       <Auth
         supabaseClient={supabase}
         onlyThirdPartyProviders
+        redirectTo={redirectUrl}
         providers={["google"]}
       />
     </Layout>
   );
+};
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  // will have to use getUserByCookie later supabase.
+  const { user } = await supabase.auth.api.getUserByCookie(context.req);
+
+  if (user == null) {
+    return {
+      props: {
+        error: { message: "User not logged in" },
+        assets: [],
+      },
+    };
+  }
+
+  const { data, error } = await supabase
+    .from("asset")
+    .select("*")
+    .eq("owner", user.id);
+
+  if (error) {
+    console.error(error);
+    return {
+      props: {
+        error: error,
+        assets: [],
+      },
+    };
+  }
+
+  return {
+    props: {
+      assets: data,
+    }, // will be passed to the page component as props
+  };
 };
 
 export default IndexPage;
