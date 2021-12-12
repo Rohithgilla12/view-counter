@@ -74,7 +74,7 @@ const IndexPage: React.FC<MyAssetsProps> = ({ error, assets }) => {
                   console.log(error);
                 } else {
                   console.log(data[0]);
-                  setEmbedUrl(`${window.location.href}${data[0].id}`);
+                  setEmbedUrl(`${window.location.href}api/view/${data[0].id}`);
                 }
               }}
             >

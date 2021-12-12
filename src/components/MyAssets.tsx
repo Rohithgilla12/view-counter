@@ -1,13 +1,19 @@
+import { CopyIcon } from "@chakra-ui/icons";
 import {
+  Box,
+  Flex,
+  IconButton,
+  Link as ChakraLink,
   Table,
   TableCaption,
   Tbody,
   Td,
+  Text,
   Th,
   Thead,
   Tr,
-  Link,
 } from "@chakra-ui/react";
+import Link from "next/link";
 import React from "react";
 import { format } from "timeago.js";
 
@@ -27,7 +33,7 @@ interface MyAssetsProps {
 
 export const MyAssets: React.FC<MyAssetsProps> = ({ error, assets }) => {
   return (
-    <Table size="md" variant={"simple"}>
+    <Table size="md" variant={"striped"}>
       <TableCaption>Created Assets</TableCaption>
       <Thead>
         <Tr>
@@ -35,6 +41,8 @@ export const MyAssets: React.FC<MyAssetsProps> = ({ error, assets }) => {
           <Th>Created</Th>
           <Th>URL</Th>
           <Th>Slug</Th>
+          <Th>Embed Link</Th>
+          <Th>Stats</Th>
         </Tr>
       </Thead>
       <Tbody>
@@ -42,12 +50,35 @@ export const MyAssets: React.FC<MyAssetsProps> = ({ error, assets }) => {
           <Tr key={asset.id}>
             <Td>{asset.id}</Td>
             <Td>{format(asset.created_at)}</Td>
-            <Td w={"50%"}>
-              <Link color="teal.500" isExternal={true}>
+            <Td w={"40%"}>
+              <ChakraLink color="teal.500" isExternal={true}>
                 {asset.url}
-              </Link>
+              </ChakraLink>
             </Td>
             <Td>{asset.slug ?? ""}</Td>
+            <Td>
+              {" "}
+              <Flex direction={"row"}>
+                <Text>{`${window.location.href}api/view/${asset.id}`}</Text>
+                <Box width={8} />
+                <IconButton
+                  onClick={() => {
+                    navigator.clipboard.writeText(
+                      `${window.location.href}api/view/${asset.id}`
+                    );
+                  }}
+                  aria-label="Copy URL"
+                  icon={<CopyIcon />}
+                />
+              </Flex>
+            </Td>
+            <Td>
+              <Link href={`/stats/${asset.id}`}>
+                <a>
+                  <ChakraLink>View Stats</ChakraLink>
+                </a>
+              </Link>
+            </Td>
           </Tr>
         ))}
       </Tbody>
