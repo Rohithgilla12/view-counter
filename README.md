@@ -1,47 +1,46 @@
-# TypeScript Next.js example
+# View Counter
 
-This is a really simple project that shows the usage of Next.js with TypeScript.
+This is simple solution to count your views in your pages with analytics.
 
-## Preview
+### Tech Stack
 
-Preview the example live on [StackBlitz](http://stackblitz.com/):
+- Next JS
+- Supabase
+- Chakra UI
+- Supabase UI
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/vercel/next.js/tree/canary/examples/with-typescript)
+Users can give a URL which they want to count views, they can also give a slug.
 
-## Deploy your own
+What we generate is an iFrame that can be plugged into their website.
 
-Deploy the example using [Vercel](https://vercel.com?utm_source=github&utm_medium=readme&utm_campaign=next-example):
+Whenever the website is hit, it increments the count and shows the count in the iFrame.
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/git/external?repository-url=https://github.com/vercel/next.js/tree/canary/examples/with-typescript&project-name=with-typescript&repository-name=with-typescript)
+The iFrame is generated using Next JS Serverless functions.
 
-## How to use it?
+### Images
 
-Execute [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app) with [npm](https://docs.npmjs.com/cli/init) or [Yarn](https://yarnpkg.com/lang/en/docs/cli/create/) to bootstrap the example:
+Creation Page ![https://i.imgur.com/bjA1hMs.png](https://i.imgur.com/bjA1hMs.png)
 
-```bash
-npx create-next-app --example with-typescript with-typescript-app
-# or
-yarn create next-app --example with-typescript with-typescript-app
-```
+Here you can create a link, once genereated it gives you a embed link for iFrame.
 
-Deploy it to the cloud with [Vercel](https://vercel.com/new?utm_source=github&utm_medium=readme&utm_campaign=next-example) ([Documentation](https://nextjs.org/docs/deployment)).
+Stats Page
+![https://i.imgur.com/UfE7mLK.png](https://i.imgur.com/UfE7mLK.png)
 
-## Notes
+You can see the stats of the link.
 
-This example shows how to integrate the TypeScript type system into Next.js. Since TypeScript is supported out of the box with Next.js, all we have to do is to install TypeScript.
+iFrames in action
 
-```
-npm install --save-dev typescript
-```
+![https://i.imgur.com/Fgh4eAo.png](https://i.imgur.com/Fgh4eAo.png)
 
-To enable TypeScript's features, we install the type declarations for React and Node.
+![https://i.imgur.com/4llRlnM.png](https://i.imgur.com/4llRlnM.png)
 
-```
-npm install --save-dev @types/react @types/react-dom @types/node
-```
+### Schema
 
-When we run `next dev` the next time, Next.js will start looking for any `.ts` or `.tsx` files in our project and builds it. It even automatically creates a `tsconfig.json` file for our project with the recommended settings.
+![https://i.imgur.com/ooLdwJm.png](https://i.imgur.com/ooLdwJm.png)
 
-Next.js has built-in TypeScript declarations, so we'll get autocompletion for Next.js' modules straight away.
+### Loom Video
 
-A `type-check` script is also added to `package.json`, which runs TypeScript's `tsc` CLI in `noEmit` mode to run type-checking separately. You can then include this, for example, in your `test` scripts.
+[https://www.loom.com/share/1901efa4be3a41c498bf851c1c3b23cc](https://www.loom.com/share/1901efa4be3a41c498bf851c1c3b23cc)
+
+Thanks
+Rohith Gilla
