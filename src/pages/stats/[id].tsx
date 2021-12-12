@@ -78,6 +78,12 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       redirect: {
         destination: "/",
       },
+      props: {
+        error: assetError,
+        mapData: [],
+        reChartDate: [],
+        url: "",
+      },
     };
   }
 
