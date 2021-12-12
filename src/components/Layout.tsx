@@ -10,8 +10,8 @@ type Props = {
 };
 
 const Layout = ({ children, title = "This is the default title" }: Props) => (
-  <Center>
-    <Box maxH="100%" maxW="80%" p={8}>
+  <>
+    <Box maxH="100%" maxW="100%" m={16} p={16}>
       <Head>
         <title>{title}</title>
         <meta charSet="utf-8" />
@@ -20,7 +20,7 @@ const Layout = ({ children, title = "This is the default title" }: Props) => (
       <DarkModeSwitch />
       {children}
     </Box>
-  </Center>
+  </>
 );
 
 export default Layout;
