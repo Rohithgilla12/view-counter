@@ -17,6 +17,9 @@ import Link from "next/link";
 import React from "react";
 import { format } from "timeago.js";
 
+const NETLIFY_IMAGE_EMBED =
+  "https://relaxed-joliot-41cdfa.netlify.app/.netlify/functions/counter?id=";
+
 interface Asset {
   id: number;
   created_at: Date;
@@ -41,7 +44,8 @@ export const MyAssets: React.FC<MyAssetsProps> = ({ error, assets }) => {
           <Th>Created</Th>
           <Th>URL</Th>
           <Th>Slug</Th>
-          <Th>Embed Link</Th>
+          <Th>Embed IFrame Link</Th>
+          <Th>Embed PNG</Th>
           <Th>Stats</Th>
         </Tr>
       </Thead>
@@ -50,7 +54,7 @@ export const MyAssets: React.FC<MyAssetsProps> = ({ error, assets }) => {
           <Tr key={asset.id}>
             <Td>{asset.id}</Td>
             <Td>{format(asset.created_at)}</Td>
-            <Td w={"40%"}>
+            <Td w={"30%"}>
               <ChakraLink color="teal.500" isExternal={true}>
                 {asset.url}
               </ChakraLink>
@@ -59,12 +63,28 @@ export const MyAssets: React.FC<MyAssetsProps> = ({ error, assets }) => {
             <Td>
               {" "}
               <Flex direction={"row"}>
-                <Text>{`${window.location.href}api/view/${asset.id}`}</Text>
-                <Box width={8} />
+                {/* <Text>{`${window.location.href}api/view/${asset.id}`}</Text>
+                <Box width={8} /> */}
                 <IconButton
                   onClick={() => {
                     navigator.clipboard.writeText(
                       `${window.location.href}api/view/${asset.id}`
+                    );
+                  }}
+                  aria-label="Copy URL"
+                  icon={<CopyIcon />}
+                />
+              </Flex>
+            </Td>
+            <Td>
+              {" "}
+              <Flex direction={"row"}>
+                {/* <Text>{`${NETLIFY_IMAGE_EMBED}${asset.id}`}</Text> */}
+                {/* <Box width={8} /> */}
+                <IconButton
+                  onClick={() => {
+                    navigator.clipboard.writeText(
+                      `${NETLIFY_IMAGE_EMBED}${asset.id}`
                     );
                   }}
                   aria-label="Copy URL"

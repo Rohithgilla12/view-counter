@@ -19,6 +19,9 @@ import Layout from "../components/Layout";
 import { MyAssets } from "../components/MyAssets";
 import { supabase } from "../utils/supabase";
 
+const NETLIFY_IMAGE_EMBED =
+  "https://relaxed-joliot-41cdfa.netlify.app/.netlify/functions/counter?id=";
+
 interface Asset {
   id: number;
   created_at: Date;
@@ -39,8 +42,9 @@ const IndexPage: React.FC<MyAssetsProps> = ({ error, assets }) => {
   const { user } = Auth.useUser();
 
   const [embedUrl, setEmbedUrl] = useState<string | null>(null);
+  const [imageEmbedUrl, setImageEmbedUrl] = useState<string | null>(null);
+
   const [redirectUrl, setRedirectUrl] = useState("");
-  const [createdData, setCreatedData] = useState<any>(null);
 
   useEffect(() => {
     setRedirectUrl(window.location.href);
@@ -73,8 +77,8 @@ const IndexPage: React.FC<MyAssetsProps> = ({ error, assets }) => {
                   // Handle error
                   console.log(error);
                 } else {
-                  console.log(data[0]);
                   setEmbedUrl(`${window.location.href}api/view/${data[0].id}`);
+                  setImageEmbedUrl(`${NETLIFY_IMAGE_EMBED}${data[0].id}`);
                 }
               }}
             >
@@ -109,13 +113,24 @@ const IndexPage: React.FC<MyAssetsProps> = ({ error, assets }) => {
             ) : (
               <Center>
                 <Flex direction={"row"}>
-                  <Text>{embedUrl}</Text>
+                  <Text>IFrame {embedUrl}</Text>
                   <Box width={8} />
                   <IconButton
                     onClick={() => {
                       navigator.clipboard.writeText(embedUrl);
                     }}
                     aria-label="Copy URL"
+                    icon={<CopyIcon />}
+                  />
+                </Flex>
+                <Flex direction={"row"}>
+                  <Text>PNG {imageEmbedUrl}</Text>
+                  <Box width={8} />
+                  <IconButton
+                    onClick={() => {
+                      navigator.clipboard.writeText(imageEmbedUrl);
+                    }}
+                    aria-label="Copy Image URL"
                     icon={<CopyIcon />}
                   />
                 </Flex>
@@ -158,7 +173,8 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const { data, error } = await supabase
     .from("asset")
     .select("*")
-    .eq("owner", user.id);
+    .eq("owner", user.id)
+    .order("created_at", { ascending: false });
 
   if (error) {
     console.error(error);
