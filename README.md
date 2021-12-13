@@ -2,6 +2,13 @@
 
 This is simple solution to count your views in your pages with analytics.
 
+### Team 
+
+| Name  |Github   |Twitter   |
+|---|---|---|
+|Rohtih Gilla   |Rohithgilla12   |gillarohith   |
+
+
 ### Tech Stack
 
 - Next JS
