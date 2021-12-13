@@ -68,12 +68,9 @@ iFrames in action
 
 PNGs in action
 
-Live example this repo stats
+![https://i.imgur.com/OMPOzdv.png](https://i.imgur.com/OMPOzdv.png)
 
-![https://relaxed-joliot-41cdfa.netlify.app/.netlify/functions/counter?id=19](https://relaxed-joliot-41cdfa.netlify.app/.netlify/functions/counter?id=19)
 
-You can check public stats of this link here
-[https://view-counter-supabase.vercel.app/stats/19](https://view-counter-supabase.vercel.app/stats/19)
 
 Thanks
 Rohith Gilla
