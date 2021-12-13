@@ -42,7 +42,7 @@ const getCommonCSS = () => {
     .mainFrame{
       background : #093145;
       padding: 8px;
-      border-radius: 8px;
+      // border-radius: 8px;
     }
 `;
 };
